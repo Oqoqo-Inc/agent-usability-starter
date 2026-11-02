@@ -1,0 +1,560 @@
+{
+  "published_on": "2026-11-02",
+  "public_experiment": "https://gallery.oqoqo.ai/experiments/pub_a504f0d3e916e8cba223f7dd3f33acd3",
+  "public_snapshot": {
+    "version": 1,
+    "contentHash": "837d8728dd83e8c7df2369755cf7e58a56f0b74a772488a4aa16fdcccb1631ce",
+    "manifestHash": "480100161d736a8454d8ec2c448b149406ddf9a3eeecb907c3455e415896d5f6",
+    "completedAt": "2026-11-02T20:41:22.060Z"
+  },
+  "scope": "Qdrant Python SDK local mode; provided documentation comparison, not natural web discovery, production Cloud, or auth testing",
+  "sdk": "qdrant-client==1.15.1",
+  "original_python": "3.12.3",
+  "agents": [
+    {
+      "harness": "Claude Code",
+      "version": "2.1.310",
+      "model": "claude-opus-5",
+      "effort": "high"
+    },
+    {
+      "harness": "Codex",
+      "version": "0.164.0",
+      "model": "gpt-5.6-sol",
+      "effort": "high"
+    }
+  ],
+  "conditions": [
+    "Pinned upstream README via identical documentation wrapper",
+    "Same README plus Oqoqo-authored workflow notes via identical wrapper"
+  ],
+  "controls": "Identical wrapper metadata and body, SDK, fixture, machine, task rubrics and agent settings. Only reference.md differs. Read evidence is diagnostic, not a success criterion. Network/other docs use must be audited before attribution.",
+  "tasks": [
+    "Environment and documentation probe",
+    "Tenant-filtered nearest-neighbor retrieval",
+    "Complete paginated tenant export",
+    "Persisted payload update after reopen"
+  ],
+  "total_attempts": 32,
+  "integration_attempts": 24,
+  "probe_attempts": 8,
+  "repeats_per_cell": 2,
+  "pilot_excluded": true,
+  "upstream_readme": {
+    "url": "https://raw.githubusercontent.com/qdrant/qdrant-client/v1.15.1/README.md",
+    "sha256": "668410ed85174072122d80788c50ef7f19ea1ac88ebf394c4d9e0b6f8504561e",
+    "license": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/LICENSE"
+  },
+  "wrapper_sha256": "9e1ee6ba20feb9621e2cdb176b5e2dec315044086e97cffafc218469062ea094",
+  "docs_sha256": {
+    "baseline": "668410ed85174072122d80788c50ef7f19ea1ac88ebf394c4d9e0b6f8504561e",
+    "revised": "e10677249ed13b076cda6f721487ba846ed068ae8dd2faa99fc4a33f97bc366c"
+  },
+  "independent_check_replay": {
+    "runtime": "Python 3.13.16 Docker replay; qdrant-client==1.15.1; network disabled, read-only candidate/verifier mounts, fresh tmpfs working directory per attempt. Replay runtime differs from original Python 3.12.3.",
+    "scope": "Original supplied workflow check corresponding to each retained implementation; independent from the model grader. No change to historical grades.",
+    "attempts": [
+      {
+        "trial_id": "run_a0d98e1430f34e25a3687fa9",
+        "task": "task_02",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "9ecbf1a484f664529dd4d218f1f4dfc10ccfdd1e5ea0fad463daf7b766a22020"
+      },
+      {
+        "trial_id": "run_d293928ecf5eb6d358f86fad",
+        "task": "task_04",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "50acb31389e1bacfff68c4195461c06ff777527a11b978b8814625dd1f012192"
+      },
+      {
+        "trial_id": "run_57ce22d5150ba8ebf24f39dc",
+        "task": "task_02",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "295357e4f3f685b13b8355ec4b0a71032d2710123a26ff69c33e5ea83b9fb8f2"
+      },
+      {
+        "trial_id": "run_e356b4a5805e5464825d93fb",
+        "task": "task_04",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "959232857bc6894317ea1ed95373e29f8b1807ccdb14176ca0d249fa41182dda"
+      },
+      {
+        "trial_id": "run_8ce5b7804169ea049b5d69b0",
+        "task": "task_04",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "e8a3fa6fca8466f163ffdd281bd1b5fd4b48d78e357d8adb9839e4d817f30218"
+      },
+      {
+        "trial_id": "run_2d7c422340e159e972cd006f",
+        "task": "task_04",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "3c1f1179a003c3b8d99af53eb2fcd1d67104f8bab36d81eb317e3e09556eb702"
+      },
+      {
+        "trial_id": "run_5212740db63f70f29e02bc40",
+        "task": "task_02",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "2214854919b3978febcc74c009d221aa2bd7f1ed903eb07854de9d12220803f1"
+      },
+      {
+        "trial_id": "run_f7a2fe21d9f188f57a1a081e",
+        "task": "task_04",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "1f037f31d343badb56afa89b3cc7155f903cc82fdc5048cfdfcd1e36d6dcb7e8"
+      },
+      {
+        "trial_id": "run_e41f668f597a6940cdff4c1c",
+        "task": "task_04",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "35139126aa866967d85441fb68aaa8944cda5235845677f737f796d600119227"
+      },
+      {
+        "trial_id": "run_e2c0f82cbfb5a8fc8c983170",
+        "task": "task_03",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "e02c927fae6df24247720d8f482d8c81d72876b84045eeae45bf993bba4b7eca"
+      },
+      {
+        "trial_id": "run_8b879b9690632992b47a8930",
+        "task": "task_02",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "b7a54ac338a584a1702c8058c6f08f648625ba0f922a545c36197b53a3ed3d58"
+      },
+      {
+        "trial_id": "run_4f30b3d083b8c920931e8064",
+        "task": "task_03",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "7fdc65524c85255262e846f9c1651fd031f481d00b6c7856b561e4dc9602fcc9"
+      },
+      {
+        "trial_id": "run_ab5e06efc47ba8bc746feb20",
+        "task": "task_04",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "e5145b8ac0cce06d12aaba7f8cfd460743c4b231e28f4139b176f08a58f19f2e"
+      },
+      {
+        "trial_id": "run_cdd37216994fa46b9d71d52d",
+        "task": "task_03",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "6118dbfa4cb9d4253330928ccaae5a4e5341a053e665a7c80d310e39e88ffe80"
+      },
+      {
+        "trial_id": "run_48506047592e815531c21747",
+        "task": "task_03",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "5d8d83c71262754719600ae7157a5e0b49055d5b2fa72e4bd2690ba17fc17917"
+      },
+      {
+        "trial_id": "run_5881b07fa72f5d694f9d6b97",
+        "task": "task_02",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "22e0049b152c45716c40f71a0c31c1b46b7a5c0062c53fc1df03deb4e5ec688f"
+      },
+      {
+        "trial_id": "run_e216d78dd4b4883bb16c350b",
+        "task": "task_03",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "90fe5aa5db6fd65ef9b503bb1444a8043e036c3a551d492e132f3cc823754cc4"
+      },
+      {
+        "trial_id": "run_c3393b4cd33845678dc4e1f1",
+        "task": "task_04",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "original_outcome": "fail",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "b228747722f14c91017bc7653906502c913bbeab305223978ab9ea8bf3fe6e01"
+      },
+      {
+        "trial_id": "run_86589596fafa1974ac61c744",
+        "task": "task_03",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "731e6e36cb38a1137006b68ffd0d355fbf338350d8306042bcfdd847b16fc100"
+      },
+      {
+        "trial_id": "run_c92b51265bef1b557b44b537",
+        "task": "task_02",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "b7a54ac338a584a1702c8058c6f08f648625ba0f922a545c36197b53a3ed3d58"
+      },
+      {
+        "trial_id": "run_9771c7858c77fe2c8ea4db41",
+        "task": "task_02",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "d89f86a840313caafbda8bb991fafd8772512889615fda2a889c9839807218c4"
+      },
+      {
+        "trial_id": "run_3a29f94b2244772fd6c40d7e",
+        "task": "task_02",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "2d2d655381208c9ddc3d242e368b2417df8d1cb711f66d8f3546d3053829f444"
+      },
+      {
+        "trial_id": "run_04faad01ab957f6fd44a81c2",
+        "task": "task_03",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "6120d156825b8324797edf71714276ca8216b8f947042fe0943b0e00702c0e46"
+      },
+      {
+        "trial_id": "run_05cd4335c132647881dd81e2",
+        "task": "task_03",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "original_outcome": "pass",
+        "independent_fixture_pass": true,
+        "artifact_sha256": "31dc691a2be3bbe0735a83025d192aa5b8b0d92f9797b4d226d01af058e7e2dd"
+      }
+    ]
+  },
+  "vector_followup": {
+    "scope": "Follow-up local Python 3.9 audit; persisted baseline read from a fresh client; search before payload update; not a rerun or replacement of original task grades. Exact magnitude and cosine direction assessed separately.",
+    "attempts": [
+      {
+        "trial_id": "run_d293928ecf5eb6d358f86fad",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_e356b4a5805e5464825d93fb",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_8ce5b7804169ea049b5d69b0",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_2d7c422340e159e972cd006f",
+        "agent": "Codex",
+        "condition": "Pinned README",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_f7a2fe21d9f188f57a1a081e",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_e41f668f597a6940cdff4c1c",
+        "agent": "Codex",
+        "condition": "README plus workflow notes",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_ab5e06efc47ba8bc746feb20",
+        "agent": "Claude Code",
+        "condition": "Pinned README",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "run_c3393b4cd33845678dc4e1f1",
+        "agent": "Claude Code",
+        "condition": "README plus workflow notes",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      },
+      {
+        "trial_id": "reference",
+        "agent": "deterministic reference",
+        "condition": "control",
+        "before": {
+          "4": [
+            1,
+            0.4,
+            0.1
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "after": {
+          "4": [
+            0.9245003270420484,
+            0.3698001308168194,
+            0.09245003270420485
+          ],
+          "5": [
+            1,
+            0.5,
+            0.1
+          ]
+        },
+        "exact_magnitude_preserved": false,
+        "direction_preserved": true
+      }
+    ]
+  },
+  "interpretation": "Descriptive diagnostic pilot; original model grades preserved. Independent supplied checks are a separate measurement, not a complete rubric or a causal documentation uplift. Vector magnitude criterion needs SDK-semantic calibration. No complete audit of every external lookup; no inferred causal effect."
+}

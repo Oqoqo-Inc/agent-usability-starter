@@ -1,0 +1,33 @@
+trial_id,task,cohort,agent,model,effort,condition,repeat,initial_grader_outcome,independent_workflow_check,input_tokens,cached_input_tokens_subset,output_tokens,agent_seconds,reported_attempt_seconds,documentation_use_state
+run_04faad01ab957f6fd44a81c2,task_03,integration,Codex,gpt-5.6-sol,high,Pinned README,1,pass,pass,160208,151296,2370,60.501,100.287,used
+run_05cd4335c132647881dd81e2,task_03,integration,Claude Code,claude-opus-5,high,Pinned README,2,pass,pass,329859,312916,5370,106.359,147.676,used
+run_2bc4ca6ee229c606ab263961,task_01,probe,Claude Code,claude-opus-5,high,Pinned README,1,pass,,133554,121149,2177,51.937,91.696,used
+run_2d7c422340e159e972cd006f,task_04,integration,Codex,gpt-5.6-sol,high,Pinned README,1,pass,pass,193511,185088,2824,65.851,170.39,used
+run_3a29f94b2244772fd6c40d7e,task_02,integration,Claude Code,claude-opus-5,high,Pinned README,1,pass,pass,264737,249432,4114,89.792,121.935,used
+run_426225e794f17c4a331822e6,task_01,probe,Codex,gpt-5.6-sol,high,Pinned README,2,pass,,84444,75648,2134,49.685,83.931,used
+run_48506047592e815531c21747,task_03,integration,Codex,gpt-5.6-sol,high,Pinned README,2,pass,pass,184934,177536,2433,62.04,103.336,used
+run_4a381c1aa9ad016400794172,task_01,probe,Codex,gpt-5.6-sol,high,Pinned README,1,pass,,83568,73600,1736,47.325,83.366,used
+run_4f30b3d083b8c920931e8064,task_03,integration,Claude Code,claude-opus-5,high,README plus workflow notes,1,pass,pass,271601,255091,5275,103.436,135.035,used
+run_5212740db63f70f29e02bc40,task_02,integration,Claude Code,claude-opus-5,high,README plus workflow notes,1,pass,pass,268292,252695,3975,83.19,119.874,used
+run_57ce22d5150ba8ebf24f39dc,task_02,integration,Codex,gpt-5.6-sol,high,Pinned README,1,pass,pass,132642,125184,1691,56.116,100.259,used
+run_5881b07fa72f5d694f9d6b97,task_02,integration,Claude Code,claude-opus-5,high,README plus workflow notes,2,pass,pass,234051,218906,3981,80.177,116.887,used
+run_62cc8c647c4a20aa972e01bb,task_01,probe,Claude Code,claude-opus-5,high,Pinned README,2,pass,,160627,147564,3355,67.666,100.589,used
+run_78fdc1c7e8ceab557c5e01a8,task_01,probe,Claude Code,claude-opus-5,high,README plus workflow notes,2,pass,,134473,122041,2328,58.021,92.72,used
+run_86589596fafa1974ac61c744,task_03,integration,Claude Code,claude-opus-5,high,Pinned README,1,pass,pass,312972,293589,6786,124.083,158.997,used
+run_8b879b9690632992b47a8930,task_02,integration,Codex,gpt-5.6-sol,high,Pinned README,2,pass,pass,101689,94720,1746,55.005,85.53,used
+run_8ce5b7804169ea049b5d69b0,task_04,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,2,pass,pass,118873,111104,1649,54.39,115.229,used
+run_9771c7858c77fe2c8ea4db41,task_02,integration,Claude Code,claude-opus-5,high,Pinned README,2,pass,pass,212147,197585,3669,79.471,111.394,used
+run_a0d98e1430f34e25a3687fa9,task_02,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,2,pass,pass,146934,115840,1839,59.749,96.947,used
+run_a74e1f5358ea653de5b6f001,task_01,probe,Claude Code,claude-opus-5,high,README plus workflow notes,1,pass,,135271,122398,2519,61.982,98.164,used
+run_ab5e06efc47ba8bc746feb20,task_04,integration,Claude Code,claude-opus-5,high,Pinned README,2,pass,pass,727676,696418,13470,211.041,245.994,used
+run_c3393b4cd33845678dc4e1f1,task_04,integration,Claude Code,claude-opus-5,high,README plus workflow notes,2,fail,pass,891848,861240,14288,239.957,271.608,used
+run_c92b51265bef1b557b44b537,task_02,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,1,pass,pass,123636,115840,1953,53.812,83.827,used
+run_cdd37216994fa46b9d71d52d,task_03,integration,Claude Code,claude-opus-5,high,README plus workflow notes,2,pass,pass,286839,271238,3873,79.321,114.219,used
+run_d293928ecf5eb6d358f86fad,task_04,integration,Claude Code,claude-opus-5,high,README plus workflow notes,1,pass,pass,504843,483654,7775,147.935,179.367,used
+run_e216d78dd4b4883bb16c350b,task_03,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,1,pass,pass,111336,104448,1833,49.366,110.061,used
+run_e2c0f82cbfb5a8fc8c983170,task_03,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,2,pass,pass,144848,135424,2805,66.32,99.882,used
+run_e356b4a5805e5464825d93fb,task_04,integration,Codex,gpt-5.6-sol,high,Pinned README,2,pass,pass,123694,114688,2394,58.754,130.877,used
+run_e41f668f597a6940cdff4c1c,task_04,integration,Codex,gpt-5.6-sol,high,README plus workflow notes,1,pass,pass,172715,165120,2199,66.684,105.269,used
+run_e5b19b8d3398a382a5d38ac5,task_01,probe,Codex,gpt-5.6-sol,high,README plus workflow notes,1,pass,,58225,52224,974,39.327,110.01,used
+run_eeb4c44db8927b574813603e,task_01,probe,Codex,gpt-5.6-sol,high,README plus workflow notes,2,pass,,72082,66432,2218,49.785,119.823,used
+run_f7a2fe21d9f188f57a1a081e,task_04,integration,Claude Code,claude-opus-5,high,Pinned README,1,pass,pass,347905,329721,6398,114.961,149.255,used
