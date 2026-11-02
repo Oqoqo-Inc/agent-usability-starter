@@ -1,0 +1,1 @@
+Implement a complete tenant export in Catalog.export. Follow all pages; batch_size is a page size. Return every matching point ID once and return an empty list for an absent tenant. Use qdrant-client 1.15.1 and consult the supplied qdrant-docs reference. Leave code and a short verification summary.

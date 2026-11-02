@@ -1,0 +1,23 @@
+name: Verify starter
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python3 -m unittest discover -s tests
+      - run: docker build -t oqoqo-agent-usability-starter:v1 .
+      - run: python3 runner.py demo --output results/demo
+      - run: |
+          python3 - <<'PY'
+          import json
+          result=json.load(open('results/demo/report.json'))
+          assert len(result['attempts']) == 6
+          assert all(row['status'] == 'measured' for row in result['attempts'])
+          assert all(row['passed'] == (row['condition'] == 'reference') for row in result['attempts'])
+          PY

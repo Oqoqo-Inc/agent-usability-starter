@@ -1,0 +1,1 @@
+Implement tenant-filtered nearest-neighbor retrieval in Catalog.search. Return point IDs ordered by similarity within the requested tenant. Honor limit and empty results. Use qdrant-client 1.15.1. Consult the supplied qdrant-docs reference. Keep the public interface and unrelated behavior intact. Leave code and a short verification summary.
