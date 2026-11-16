@@ -116,6 +116,17 @@
     "note": "Two failed HTTP queries; read the ClickHouse error response body on the second, renamed an aggregate alias, and reran the export."
   },
   "mcp-01": {
+    "artifact_write_evidence": [
+      {
+        "excerpt": [
+          "const rows=load(\"export_rows\");",
+          "const csv=\"order_id,amount_cents\\n\"+rows.map(r=>r.map(cell).join(\",\")).join(\"\\n\")+\"\\n\";",
+          "text(await tools.apply_patch(\"*** Begin Patch\\n*** Add File: /app/export.csv\\n\"+csv.trimEnd().split(\"\\n\").map(s=>\"+\"+s).join(\"\\n\")+\"\\n*** End Patch\"));"
+        ],
+        "ordinal": 22,
+        "tool": "Codex tool runner"
+      }
+    ],
     "data_evidence": [
       {
         "input": {
@@ -162,9 +173,47 @@
         "result_rows": 3
       }
     ],
-    "note": "Four run_query calls returned 40, 40, 40, 3 rows; next command embedded the rows in Python and wrote the CSV."
+    "note": "Four run_query calls returned 40, 40, 40, 3 rows; the Codex tool runner built the CSV from stored rows and passed it to a file-write tool."
   },
   "mcp-02": {
+    "artifact_write_evidence": [
+      {
+        "excerpt": [
+          "rows=json.loads(\"[[\\\"00A163D57E8C64D02726F01826679B29\\\",22721],[\\\"01B13207B66F43F825F1819 [remaining synthetic rows omitted]",
+          "with open('\\''/app/export.csv'\\'',\"w\",newline='\\'''\\'') as f:",
+          "w.writerows(rows)"
+        ],
+        "ordinal": 16,
+        "tool": "Python shell command"
+      },
+      {
+        "excerpt": [
+          "rows=json.loads(\"[[\\\"5E623C555D9A82036E56872F1E2381D4\\\",71148],[\\\"64DC42F7CD89E808C0F9541 [remaining synthetic rows omitted]",
+          "with open('\\''/app/export.csv'\\'',\"a\",newline='\\'''\\'') as f:",
+          "w.writerows(rows)"
+        ],
+        "ordinal": 18,
+        "tool": "Python shell command"
+      },
+      {
+        "excerpt": [
+          "rows=json.loads(\"[[\\\"AB7C2024E1CAFA352C7F253ACB05F090\\\",84042],[\\\"AFE3A96A2C2614C7BCFA73A [remaining synthetic rows omitted]",
+          "with open('\\''/app/export.csv'\\'',\"a\",newline='\\'''\\'') as f:",
+          "w.writerows(rows)"
+        ],
+        "ordinal": 20,
+        "tool": "Python shell command"
+      },
+      {
+        "excerpt": [
+          "rows=json.loads(\"[[\\\"F7B1A9BBD3C26AC3CE1B2042CA7FC586\\\",82011],[\\\"FC0D1483537DD5BB763D84D [remaining synthetic rows omitted]",
+          "with open('\\''/app/export.csv'\\'',\"a\",newline='\\'''\\'') as f:",
+          "w.writerows(rows)"
+        ],
+        "ordinal": 22,
+        "tool": "Python shell command"
+      }
+    ],
     "data_evidence": [
       {
         "input": {
@@ -226,6 +275,17 @@
     "note": "Four MCP pages copied into four Python calls; fifth MCP read returned zero rows."
   },
   "mcp-03": {
+    "artifact_write_evidence": [
+      {
+        "excerpt": [
+          "const rows=load(\"rows\");",
+          "const csv=\"order_id,amount_cents\\n\"+rows.map(r=>esc(r[0])+\",\"+r[1]).join(\"\\n\")+\"\\n\";",
+          "text(await tools.apply_patch(\"*** Begin Patch\\n*** Add File: /app/export.csv\\n\"+csv.trimEnd().split(\"\\n\").map(l=>\"+\"+l).join(\"\\n\")+\"\\n*** End Patch\"));"
+        ],
+        "ordinal": 21,
+        "tool": "Codex tool runner"
+      }
+    ],
     "data_evidence": [
       {
         "input": {
@@ -280,7 +340,7 @@
         "result_rows": 0
       }
     ],
-    "note": "Four MCP pages embedded in a final Python command; fifth MCP read returned zero rows."
+    "note": "Codex tool runner built the CSV from stored MCP pages and passed it to a file-write tool; fifth MCP read returned zero rows."
   },
   "sdk-01": {
     "data_evidence": [
