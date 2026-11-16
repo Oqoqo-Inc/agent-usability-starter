@@ -1,0 +1,331 @@
+{
+  "cli-01": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "base = ['clickhouse', 'client', '--host', 'clickhouse', '--port', '9000', '--user', 'bench_reader', '--database', 'fixture']",
+          "ORDER BY order_id, amount_cents",
+          "result = subprocess.run(base + ['--query', query], check=True, capture_output=True, text=True)",
+          "if len(rows) < 40:"
+        ],
+        "observed_output": "Saved 123 unique orders to /app/export.csv; fetched 123 rows in 4 queries, each limited to 40 rows.",
+        "operation": "shell command",
+        "ordinal": 14
+      }
+    ],
+    "note": "Subprocess calls clickhouse client with LIMIT 40 and OFFSET; stops on the short page."
+  },
+  "cli-02": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "query = \"SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01')\" + cursor + \" ORDER BY order_id LIMIT 40 FORMAT CSV\"",
+          "result = subprocess.run(['clickhouse', 'client', '--host', 'clickhouse', '--port', '9000', '--user', 'bench_reader', '--database', 'fixture', '--query', query], capture_output=True, text=True, check=True)",
+          "if len(rows) < 40:"
+        ],
+        "observed_output": "Batch 1: 40 rows\nBatch 2: 40 rows\nBatch 3: 40 rows\nBatch 4: 3 rows\nSaved 123 orders to /app/export.csv",
+        "operation": "shell command",
+        "ordinal": 17
+      }
+    ],
+    "note": "Subprocess calls clickhouse client with LIMIT 40 and a keyset cursor; stops on the short page."
+  },
+  "cli-03": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "clickhouse client --host clickhouse --port 9000 --database fixture --user bench_reader --query \"SELECT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') ORDER BY order_id LIMIT 40 FORMAT CSV\""
+        ],
+        "observed_output": "40 data rows in the returned CSV page",
+        "operation": "shell command",
+        "ordinal": 14
+      },
+      {
+        "excerpt": [
+          "base = ['clickhouse', 'client', '--host', 'clickhouse', '--port', '9000', '--database', 'fixture', '--user', 'bench_reader', '--query']",
+          "query = f\"SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') ORDER BY order_id, amount_cents LIMIT 40 OFFSET {offset} FORMAT CSV\"",
+          "result = subprocess.run(base + [query], check=True, text=True, capture_output=True)",
+          "if len(rows) < 40:"
+        ],
+        "observed_output": "Exported 123 unique orders in 4 queries, each returning at most 40 rows.\nVerified CSV header, order, uniqueness, integer cents, and row count.",
+        "operation": "shell command",
+        "ordinal": 17
+      }
+    ],
+    "note": "One native CLI first-page probe, then four native CLI reads in a subprocess loop."
+  },
+  "http-01": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "query = \"SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01')\" + after + ' ORDER BY order_id, amount_cents LIMIT 40 FORMAT JSON'",
+          "with urllib.request.urlopen(req) as response:",
+          "if len(batch) < 40:"
+        ],
+        "observed_output": "{\"file\": \"/app/export.csv\", \"orders\": 123, \"queries\": 4, \"max_rows_per_query\": 40}",
+        "operation": "shell command",
+        "ordinal": 16
+      }
+    ],
+    "note": "urllib.request POST loop with LIMIT 40; stops on the short page."
+  },
+  "http-02": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "AND ordered_on < toDate('2026-02-01')\"\"\" + cursor + \"\\nORDER BY order_id\\nLIMIT 40\\nFORMAT JSON\"",
+          "with urllib.request.urlopen(request, timeout=60) as response:",
+          "if not rows:"
+        ],
+        "observed_output": "Saved 123 orders in 4 nonempty batches to /app/export.csv; header, uniqueness, ordering, and integer cents verified.",
+        "operation": "shell command",
+        "ordinal": 17
+      }
+    ],
+    "note": "urllib.request POST loop with LIMIT 40; stops on the first empty result."
+  },
+  "http-03": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "GROUP BY order_id ORDER BY order_id LIMIT 40 FORMAT JSON\"\"\"",
+          "with urllib.request.urlopen(request, timeout=60) as response:",
+          "if len(rows) < 40:"
+        ],
+        "observed_output": "urllib.error.HTTPError: HTTP Error 500: Internal Server Error",
+        "operation": "shell command",
+        "ordinal": 17
+      },
+      {
+        "excerpt": [
+          "s=open(p).read().replace('import urllib.request','import urllib.request\\nimport urllib.error').replace(\"except BaseException:\\n\", \"except BaseException as error:\\n    if isinstance(error, urllib.error.HTTPError):\\n        print(error.read().decode('utf-8'), flush=True)\\n\")"
+        ],
+        "observed_output": "Code: 184. DB::Exception: Aggregate function min(amount_cents) AS amount_cents is found inside another aggregate function in query. (ILLEGAL_AGGREGATION) (version 26.8.38.9 (official build))",
+        "operation": "shell command",
+        "ordinal": 20
+      },
+      {
+        "excerpt": [
+          "s=open(p).read().replace('min(amount_cents) AS amount_cents', 'min(amount_cents) AS min_amount_cents').replace(\"row['amount_cents']\", \"row['min_amount_cents']\")"
+        ],
+        "observed_output": "Batch 1: 40 orders\nBatch 2: 40 orders\nBatch 3: 40 orders\nBatch 4: 3 orders\n{\"file\": \"/app/export.csv\", \"orders\": 123, \"matching_source_rows\": 123, \"queries\": 4}",
+        "operation": "shell command",
+        "ordinal": 22
+      }
+    ],
+    "note": "Two failed HTTP queries; read the ClickHouse error response body on the second, renamed an aggregate alias, and reran the export."
+  },
+  "mcp-01": {
+    "data_evidence": [
+      {
+        "input": {
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 15,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 59372,
+            "last_id": "5CF0062724B51C8CEB1E4FBCA33A75F8"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 18,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 5970,
+            "last_id": "A47C2573DF0C780B1989EDFCD6403342"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 19,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 64347,
+            "last_id": "F74EEEDCCB72AA77BBBAF4DE28A820A3"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 20,
+        "result_rows": 3
+      }
+    ],
+    "note": "Four run_query calls returned 40, 40, 40, 3 rows; next command embedded the rows in Python and wrote the CSV."
+  },
+  "mcp-02": {
+    "data_evidence": [
+      {
+        "input": {
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 13,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 59372,
+            "last_id": "5CF0062724B51C8CEB1E4FBCA33A75F8"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 17,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 5970,
+            "last_id": "A47C2573DF0C780B1989EDFCD6403342"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 19,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 64347,
+            "last_id": "F74EEEDCCB72AA77BBBAF4DE28A820A3"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 21,
+        "result_rows": 3
+      },
+      {
+        "input": {
+          "params": {
+            "last_amount": 3939,
+            "last_id": "FFBB3B06FDB3336800667AF621460E1F"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND (order_id, amount_cents) > ({last_id:String}, {last_amount:UInt32}) ORDER BY order_id, amount_cents LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 23,
+        "result_rows": 0
+      }
+    ],
+    "note": "Four MCP pages copied into four Python calls; fifth MCP read returned zero rows."
+  },
+  "mcp-03": {
+    "data_evidence": [
+      {
+        "input": {
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') ORDER BY order_id LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 13,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last": "5CF0062724B51C8CEB1E4FBCA33A75F8"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND order_id > {last:String} ORDER BY order_id LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 16,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last": "A47C2573DF0C780B1989EDFCD6403342"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND order_id > {last:String} ORDER BY order_id LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 17,
+        "result_rows": 40
+      },
+      {
+        "input": {
+          "params": {
+            "last": "F74EEEDCCB72AA77BBBAF4DE28A820A3"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND order_id > {last:String} ORDER BY order_id LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 18,
+        "result_rows": 3
+      },
+      {
+        "input": {
+          "params": {
+            "last": "FFBB3B06FDB3336800667AF621460E1F"
+          },
+          "query": "SELECT DISTINCT order_id, amount_cents FROM fixture.orders WHERE tenant = 'orchid' AND status = 'paid' AND ordered_on >= toDate('2026-01-01') AND ordered_on < toDate('2026-02-01') AND order_id > {last:String} ORDER BY order_id LIMIT 40"
+        },
+        "operation": "MCP run_query",
+        "ordinal": 19,
+        "result_rows": 0
+      }
+    ],
+    "note": "Four MCP pages embedded in a final Python command; fifth MCP read returned zero rows."
+  },
+  "sdk-01": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "result = client.query('''",
+          "ORDER BY order_id, amount_cents",
+          "LIMIT 40",
+          "if len(batch) < 40:"
+        ],
+        "observed_output": "Saved 123 unique orders to /app/export.csv\nBatch sizes: [40, 40, 40, 3]",
+        "operation": "shell command",
+        "ordinal": 16
+      }
+    ],
+    "note": "clickhouse_connect result_rows loop with LIMIT 40; stops on the short page."
+  },
+  "sdk-02": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "query += 'ORDER BY order_id, amount_cents LIMIT 40'",
+          "rows = client.query(query, parameters=params).result_rows",
+          "if len(rows) < 40:"
+        ],
+        "observed_output": "Saved /app/export.csv: 123 orders; 4 queries, each limited to 40 rows. CSV columns, uniqueness, ordering, and integer cents verified.",
+        "operation": "shell command",
+        "ordinal": 17
+      }
+    ],
+    "note": "clickhouse_connect result_rows loop with LIMIT 40; stops on the short page."
+  },
+  "sdk-03": {
+    "data_evidence": [
+      {
+        "excerpt": [
+          "ORDER BY order_id, amount_cents",
+          "rows=c.query(query,parameters=params).result_rows",
+          "if not rows:"
+        ],
+        "observed_output": "Wrote 123 orders in 4 nonempty batches to /app/export.csv\nCSV header, row count, integer cents, uniqueness, and ordering verified.",
+        "operation": "shell command",
+        "ordinal": 17
+      }
+    ],
+    "note": "clickhouse_connect result_rows loop with LIMIT 40; stops on the first empty result."
+  }
+}
