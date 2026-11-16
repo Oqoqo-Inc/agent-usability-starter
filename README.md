@@ -4,6 +4,10 @@ A runnable SDK fixture and independent outcome checker from [Oqoqo](https://oqoq
 
 The fixture uses **qdrant-client 1.15.1 local mode** and synthetic vectors. It covers tenant-filtered search, paginated export, and payload updates that survive reopening. No product account, API key, embedding model, or network service is needed for verification.
 
+## Compare the same task across API, SDK, CLI and MCP
+
+The [ClickHouse export experiment](research/clickhouse-interface-export/) compares 12 real Codex runs on an identical dataset. It includes the task, fixture, every measured export, a grading script, selected traces and runnable controls. The rest of this README explains the separate Qdrant SDK starter.
+
 ## Run the fixture controls
 
 Requires Python 3.9+ on the host and Docker. Building the image downloads the pinned SDK; verification runs with networking disabled and fresh temporary state.

@@ -1,0 +1,16 @@
+trial,surface,state,artifact_pass,assigned_surface_used,row_limit_observed,full_pass,input_tokens,output_tokens,agent_ms,completed_at,nonempty_reads,empty_reads,failed_reads,trace_steps,artifact,artifact_sha256
+http-01,http,measured,True,True,True,True,56784,1059,31174,2026-11-16T20:02:08.698Z,4,0,0,17,artifacts/http-01.csv,dfbe194590dd1b7175e64ef9d49a2e963861a7a628d6f8b54acf42cf1bdf27a2
+http-02,http,measured,True,True,True,True,70538,1143,33125,2026-11-16T20:02:04.178Z,4,1,0,18,artifacts/http-02.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+http-03,http,measured,True,True,True,True,104071,1594,49375,2026-11-16T20:01:54.155Z,4,0,2,23,artifacts/http-03.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+sdk-01,sdk,measured,True,True,True,True,69219,1029,32367,2026-11-16T20:01:33.888Z,4,0,0,17,artifacts/sdk-01.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+sdk-02,sdk,measured,True,True,True,True,69396,1209,35919,2026-11-16T20:01:36.010Z,4,0,0,18,artifacts/sdk-02.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+sdk-03,sdk,measured,True,True,True,True,69978,1034,32441,2026-11-16T20:01:57.218Z,4,1,0,18,artifacts/sdk-03.csv,dfbe194590dd1b7175e64ef9d49a2e963861a7a628d6f8b54acf42cf1bdf27a2
+cli-01-initial,cli,blocked_before_agent,,,,,,,,2026-11-16T20:00:34.760Z,,,,,,
+cli-02-initial,cli,blocked_before_agent,,,,,,,,2026-11-16T20:00:24.314Z,,,,,,
+cli-03-initial,cli,blocked_before_agent,,,,,,,,2026-11-16T20:00:38.983Z,,,,,,
+cli-01,cli,measured,True,True,True,True,55028,861,28488,2026-11-16T20:07:15.068Z,4,0,0,15,artifacts/cli-01.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+cli-02,cli,measured,True,True,True,True,70056,1042,32553,2026-11-16T20:07:22.586Z,4,0,0,18,artifacts/cli-02.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+cli-03,cli,measured,True,True,True,True,71179,1059,35139,2026-11-16T20:07:24.901Z,5,0,0,18,artifacts/cli-03.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+mcp-01,mcp,measured,True,True,True,True,109883,1060,37354,2026-11-16T20:02:34.595Z,4,0,0,24,artifacts/mcp-01.csv,1ec2d557c3d05957357679185bfdb4b7ef99137ad17dac2394959c2425c288bf
+mcp-02,mcp,measured,True,True,True,True,79939,989,32538,2026-11-16T20:01:59.086Z,4,1,0,25,artifacts/mcp-02.csv,dfbe194590dd1b7175e64ef9d49a2e963861a7a628d6f8b54acf42cf1bdf27a2
+mcp-03,mcp,measured,True,True,True,True,116994,1102,41298,2026-11-16T20:02:11.054Z,4,1,0,25,artifacts/mcp-03.csv,fde7138c1ddd742068d71ff289636d8166512871d1340bc37a00aaf592afb6a1
